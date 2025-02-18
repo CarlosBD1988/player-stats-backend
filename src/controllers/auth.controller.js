@@ -51,3 +51,37 @@ export const loginUser = async (req, res) => {
     res.status(500).json({ error: "Error en el servidor" });
   }
 };
+
+
+
+export const createUser = async (req, res) => {
+    try {
+
+        const { email, name,lastname,role,schoolId,password } = req.body;     
+        const querySnapshot = await db.collection("Users").where("email", "==", email).get();
+
+        if (!querySnapshot.empty) {
+            return res.status(401).json({ error: "El correo electrónico ya está registrado." });                        
+        }
+
+        const usersRef = db.collection("Users"); // Referencia a la colección
+
+        await usersRef.add({
+        email,
+        name,
+        lastname,
+        role,
+        schoolId,
+        password,
+        createdAt: new Date(),
+        });
+
+        res.status(201).json({ message: "Usuario creado exitosamente." });
+
+
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Error en el servidor al crear usuario nuevo." });        
+      }
+    };
