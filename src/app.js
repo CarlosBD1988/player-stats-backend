@@ -3,6 +3,7 @@ import cors from "cors";
 import headquartersRoutes from "./routes/headquarters.routes.js";
 import authRoutes from "./routes/auth.routes.js";
 import categoriesRoutes from "./routes/categories.routes.js"
+import playersRoutes from "./routes/players.routes.js"
 
 const app = express();
 
@@ -14,5 +15,6 @@ app.use(express.json());
 app.use("/api/headquarters", headquartersRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/categories", categoriesRoutes);
+app.use("/api/players",playersRoutes );
 export default app;
 
