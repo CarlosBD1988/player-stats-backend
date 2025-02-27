@@ -17,7 +17,7 @@ export const addAssistance = async (req, res) => {
                 playerId:player.playerId,
                 schoolId, 
                 value:1,
-                createdAt: new Date() });
+                date: new Date() });
 
             const auditoriaRef = db.collection("audit").doc();
             batch.set(auditoriaRef, {

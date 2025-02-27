@@ -6,6 +6,7 @@ import categoriesRoutes from "./routes/categories.routes.js"
 import playersRoutes from "./routes/players.routes.js"
 import itemsRoutes from "./routes/items.routes.js"
 import assistanceRoutes from "./routes/assistance.routes.js"
+import recordsRoutes from "./routes/records.routes.js"
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use("/api/categories", categoriesRoutes);
 app.use("/api/players",playersRoutes );
 app.use("/api/items",itemsRoutes );
 app.use("/api/assistance",assistanceRoutes );
+app.use("/api/records",recordsRoutes );
 
 
 export default app;
