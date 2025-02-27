@@ -37,11 +37,41 @@ export const addRecord = async (req, res) => {
 export const addMultiplesRecords = async (req, res) => {
     try {
 
+
+        const {playerId, stats, schoolId,username} = req.body;
+        if (!playerId || !Array.isArray(stats) || !stats || !schoolId || !username) {
+            return res.status(400).json({ error: "Datos inválidos" });
+        }  
+
+        const batch = db.batch();
+
+        stats.forEach((stat) => { 
+
+            const recordRef = db.collection("records").doc();
+            batch.set(recordRef, {
+                itemId:stat.itemId,
+                playerId,
+                schoolId, 
+                value:stat.value,
+                date: new Date() });
+
+            const auditoriaRef = db.collection("audit").doc();
+            batch.set(auditoriaRef, {
+                user: username,
+                action: "new record",
+                playerId,
+                itemId:stat.itemId,
+                schoolId, 
+                value: stat.value,
+                date: new Date().toISOString(),});
+        });
+   
+        await batch.commit();
              
-        res.status(201).json({ message: "Item creado exitosamente" });
+        res.status(201).json({ message: "Estadisticas  almacenadas exitosamente" });
     }
      catch (error) {
     console.log(error)
-    res.status(500).json({ error: "Error al guardar las categorias." });
+    res.status(500).json({ error: "Error al guardar las estadisticas, Error: "+ error });
   }
 };
