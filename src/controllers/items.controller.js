@@ -4,7 +4,7 @@ export const addItem = async (req, res) => {
     try {
 
         const {name,type, schoolId } = req.body;
-
+        console.log(name,type,schoolId)
         if (!name || !type || !schoolId) {
             return res.status(400).json({ error: "Datos inválidos" });
         }       
