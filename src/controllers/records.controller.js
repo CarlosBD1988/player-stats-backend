@@ -52,7 +52,7 @@ export const addMultiplesRecords = async (req, res) => {
                 itemId:stat.itemId,
                 playerId,
                 schoolId, 
-                value:stat.value,
+                value:parseInt(stat.value),
                 date: new Date() });
 
             const auditoriaRef = db.collection("audit").doc();
@@ -62,7 +62,7 @@ export const addMultiplesRecords = async (req, res) => {
                 playerId,
                 itemId:stat.itemId,
                 schoolId, 
-                value: stat.value,
+                value: parseInt(stat.value),
                 date: new Date().toISOString(),});
         });
    
