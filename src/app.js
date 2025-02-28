@@ -7,6 +7,7 @@ import playersRoutes from "./routes/players.routes.js"
 import itemsRoutes from "./routes/items.routes.js"
 import assistanceRoutes from "./routes/assistance.routes.js"
 import recordsRoutes from "./routes/records.routes.js"
+import metricsRoutes from "./routes/metrics.routes.js"
 
 const app = express();
 
@@ -22,9 +23,10 @@ app.use("/api/players",playersRoutes );
 app.use("/api/items",itemsRoutes );
 app.use("/api/assistance",assistanceRoutes );
 app.use("/api/records",recordsRoutes );
-
+app.use("/api/metrics",metricsRoutes );
 
 export default app;
+
 
 
 
