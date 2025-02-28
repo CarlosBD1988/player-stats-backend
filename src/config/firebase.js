@@ -12,7 +12,7 @@ if (!serviceAccountPath) {
 }
 
 // Leer el archivo JSON con las credenciales de Firebase
-const serviceAccount = JSON.parse(readFileSync(serviceAccountPath, "utf8"));
+const serviceAccount = JSON.parse(serviceAccountPath);
 
 // Inicializar Firebase Admin si no está inicializado
 if (!admin.apps.length) {
