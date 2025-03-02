@@ -38,28 +38,54 @@ export const updatePlayer = async (req, res) => {
 
   export const deletePlayer = async (req, res) => {
     try {
-        const { documentNumber } = req.query; 
-  
-      // Buscar al jugador por el número de documento
-      const querySnapshot = await db.collection("players").where("documentNumber", "==", documentNumber).get();
-  
-      if (querySnapshot.empty) {
-        return res.status(404).json({ error: "Jugador no encontrado." });
-      }
-  
-      // Eliminar todos los documentos encontrados (aunque debería haber solo uno)
-      const batch = db.batch();
-      querySnapshot.forEach((doc) => {
-        batch.delete(doc.ref);
-      });
-  
-      await batch.commit();
-  
-      res.status(200).json({ message: "Jugador eliminado exitosamente." });
+      const { id } = req.query; 
+     console.log(id)
+    if (!id) {
+      return res.status(400).json({ error: "El ID del jugador es requerido." });
+    }
+
+    const playerRef = db.collection("players").doc(id);
+    const playerDoc = await playerRef.get();
+
+    if (!playerDoc.exists) {
+      return res.status(404).json({ error: "Jugador no encontrado." });
+    }
+
+    await playerRef.delete();
+
+    res.status(200).json({ message: "Jugador eliminado exitosamente." });
+
   
     } catch (error) {
       console.log(error);
       res.status(500).json({ error: "Error al eliminar jugador: " + error });
+    }
+  };
+
+  
+  export const readPlayers = async (req, res) => {
+    try {
+      const { schoolId } = req.query; // Obtiene schoolId desde los parámetros de la URL
+  
+      if (!schoolId) {
+        return res.status(400).json({ error: "schoolId es requerido" });
+      }
+  
+      const querySnapshot = await db.collection("players").where("schoolId", "==", schoolId).get();
+  
+      if (querySnapshot.empty) {
+        return res.status(404).json({ message: "No se encontraron jugadores para esta escuela" });
+      }
+  
+      const players = [];
+      querySnapshot.forEach((doc) => {
+        players.push({ id: doc.id, ...doc.data() });
+      });
+  
+      res.status(200).json(players);
+    } catch (error) {
+      console.error("Error al obtener jugadores:", error);
+      res.status(500).json({ error: "Error al obtener jugadores: " + error.message });
     }
   };
   

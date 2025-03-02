@@ -1,10 +1,12 @@
 import express from "express";
-import { addPlayer,updatePlayer,deletePlayer } from "../controllers/players.controller.js";
+import { readPlayers,addPlayer,updatePlayer,deletePlayer } from "../controllers/players.controller.js";
 
 const router = express.Router();
 
 router.post("/create", addPlayer);
-router.post("/delete", deletePlayer);
+router.get("/delete", deletePlayer);
 router.post("/update", updatePlayer);
+router.get("/list-players/:schoolId", readPlayers);
+
 
 export default router;
