@@ -65,7 +65,7 @@ export const updatePlayer = async (req, res) => {
   
   export const readPlayers = async (req, res) => {
     try {
-      const { schoolId } = req.query; // Obtiene schoolId desde los parámetros de la URL
+      const { schoolId } = req.params; // Obtiene schoolId desde los parámetros de la URL
   
       if (!schoolId) {
         return res.status(400).json({ error: "schoolId es requerido" });
