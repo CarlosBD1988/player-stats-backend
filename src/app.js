@@ -9,6 +9,7 @@ import assistanceRoutes from "./routes/assistance.routes.js"
 import recordsRoutes from "./routes/records.routes.js"
 import metricsRoutes from "./routes/metrics.routes.js"
 import technicalDirectorsRouter from "./routes/technicaldirectors.routes.js"
+import schoolsRouter from "./routes/schools.routes.js"
 
 const app = express();
 
@@ -26,8 +27,10 @@ app.use("/api/assistance",assistanceRoutes );
 app.use("/api/records",recordsRoutes );
 app.use("/api/metrics",metricsRoutes );
 app.use("/api/technical",technicalDirectorsRouter );
+app.use("/api/schools", schoolsRouter);
 
 export default app;
+
 
 
 
