@@ -28,7 +28,26 @@ export const addPlayer = async (req, res) => {
 
 export const updatePlayer = async (req, res) => {
     try {
-        res.status(201).json({ message: "metodo no implementado." });
+
+      const { playerId } = req.params; 
+      const {playerData } = req.body; 
+      console.log(playerId, playerData)
+
+
+      if (!playerId) {
+        return res.status(400).json({ error: "El ID del jugador es requerido" });
+      }
+
+      const playerRef = db.collection("players").doc(playerId);
+      const playerDoc = await playerRef.get();
+
+      if (!playerDoc.exists) {
+        return res.status(404).json({ error: "Jugador no encontrado." });
+      }
+
+      await playerRef.update(playerData);
+      res.status(201).json({ message: "Jugador actualizado con éxito" });
+
     }
     catch(error){
         console.log(error)
@@ -62,7 +81,31 @@ export const updatePlayer = async (req, res) => {
     }
   };
 
-  
+  export const readPlayerById = async (req, res) => {
+    try {
+      const { playerId } = req.params;
+
+      if (!playerId) {
+        return res.status(400).json({ error: "playerId es requerido" });
+      }    
+
+      const playerRef = db.collection("players").doc(playerId);
+      const playerDoc = await playerRef.get();
+      if (!playerDoc.exists) {
+        return res.status(404).json({ error: "Jugador no encontrado." });
+      }
+
+      res.status(200).json(playerDoc.data());
+
+
+
+    } catch (error) {
+      console.error("Error al obtener jugadores:", error);
+      res.status(500).json({ error: "Error al obtener jugadores: " + error.message });
+    }
+  };
+
+
   export const readPlayers = async (req, res) => {
     try {
       const { schoolId } = req.params; // Obtiene schoolId desde los parámetros de la URL
