@@ -3,7 +3,7 @@ import { db } from "../config/firebase.js";
 export const addPlayer = async (req, res) => {
   try {
     
-    const {name,lastname,weight, height, birthDate, country, position,  fanTeam, idType,  documentNumber,email, schoolId} = req.body; 
+    const {name,lastname,weight, height, birthDate, country, position,  fanTeam, idType,  documentNumber,email,sedePlayer, categoryPlayer,schoolId} = req.body; 
      
     const querySnapshot = await db.collection("players").where("documentNumber", "==", documentNumber).get();
     if (!querySnapshot.empty) {
@@ -12,7 +12,7 @@ export const addPlayer = async (req, res) => {
 
     const playerRef = await db.collection("players").add({
         name, lastname, weight, height, birthDate, country, position,
-        fanTeam, idType, documentNumber, email, schoolId,
+        fanTeam, idType, documentNumber, email, sede:sedePlayer,categoria:categoryPlayer, schoolId,
         createdAt: new Date(),
     });       
 
